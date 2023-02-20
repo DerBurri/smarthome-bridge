@@ -1,0 +1,3 @@
+main: home.smart.minecraft.Plugin
+version: 0.1
+name: SmarthomePlugin
