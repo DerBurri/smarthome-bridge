@@ -5,10 +5,10 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 
 import java.util.function.IntConsumer;
 
-public class SadMinecraftEventPreprocessor implements MinecraftEventPreprocessor {
+public class SadMinecraftEventUnpacker implements MinecraftEventUnpacker {
     private final MinecraftEventProcessor minecraftEventProcessor;
 
-    public SadMinecraftEventPreprocessor(MinecraftEventProcessor minecraftEventProcessor) {
+    public SadMinecraftEventUnpacker(MinecraftEventProcessor minecraftEventProcessor) {
         this.minecraftEventProcessor = minecraftEventProcessor;
     }
 

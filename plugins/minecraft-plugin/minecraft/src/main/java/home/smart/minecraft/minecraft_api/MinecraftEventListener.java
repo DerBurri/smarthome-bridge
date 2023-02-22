@@ -1,6 +1,6 @@
 package home.smart.minecraft.minecraft_api;
 
-import home.smart.minecraft.control.MinecraftEventPreprocessor;
+import home.smart.minecraft.control.MinecraftEventUnpacker;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -11,14 +11,14 @@ import org.bukkit.plugin.Plugin;
 import java.io.Closeable;
 
 /**
- * Handles listening to minecraft events and delegates calls to {@link MinecraftEventPreprocessor}.
+ * Handles listening to minecraft events and delegates calls to {@link MinecraftEventUnpacker}.
  */
 public class MinecraftEventListener implements Closeable, Listener {
-    private final MinecraftEventPreprocessor minecraftEventPreprocessor;
+    private final MinecraftEventUnpacker minecraftEventUnpacker;
     private boolean listening;
 
-    public MinecraftEventListener(Plugin plugin, MinecraftEventPreprocessor minecraftEventPreprocessor) {
-        this.minecraftEventPreprocessor = minecraftEventPreprocessor;
+    public MinecraftEventListener(Plugin plugin, MinecraftEventUnpacker minecraftEventUnpacker) {
+        this.minecraftEventUnpacker = minecraftEventUnpacker;
         Bukkit.getPluginManager().registerEvents(this, plugin);
         listening = true;
     }
@@ -29,7 +29,7 @@ public class MinecraftEventListener implements Closeable, Listener {
             return;
         }
         assert event != null;
-        minecraftEventPreprocessor.onBlockRedstone(event);
+        minecraftEventUnpacker.onBlockRedstone(event);
     }
 
     @Override

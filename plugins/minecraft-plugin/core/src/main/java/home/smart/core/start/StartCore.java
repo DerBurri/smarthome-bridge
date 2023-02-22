@@ -1,18 +1,18 @@
 package home.smart.core.start;
 
-import home.smart.core.control.UserEventProcessor;
-import home.smart.core.control.SadUserEventProcessor;
-import home.smart.core.control.SadUserEventReceiver;
-import home.smart.core.game_api.BlockManager;
-import home.smart.core.game_api.UserEventReceiver;
+import home.smart.core.control.DeviceEventProcessor;
+import home.smart.core.control.SadPluginDeviceEventProcessor;
+import home.smart.core.control.SadDeviceEventListener;
+import home.smart.core.data.DeviceManager;
+import home.smart.core.api.DeviceEventListener;
 
 public class StartCore {
-    public static UserEventReceiver createEventReceiver() {
-        UserEventProcessor userEventProcessor = new SadUserEventProcessor();
-        return new SadUserEventReceiver(userEventProcessor);
+    public static DeviceEventListener createEventReceiver() {
+        DeviceEventProcessor deviceEventProcessor = new SadPluginDeviceEventProcessor();
+        return new SadDeviceEventListener(deviceEventProcessor);
     }
 
-    public static BlockManager createBlockManager() {
-        return new BlockManager();
+    public static DeviceManager createBlockManager() {
+        return new DeviceManager();
     }
 }
