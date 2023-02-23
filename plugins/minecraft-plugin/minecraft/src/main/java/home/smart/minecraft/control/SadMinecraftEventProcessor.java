@@ -1,10 +1,11 @@
 package home.smart.minecraft.control;
 
-import home.smart.core.game_api.BlockManager;
-import home.smart.core.game_api.ChangeEvent;
-import home.smart.core.game_api.DeviceInformation;
-import home.smart.core.game_api.UserEventReceiver;
-import home.smart.minecraft.model.BlockDevice;
+import home.smart.core.data.Device;
+import home.smart.core.data.DeviceManager;
+import home.smart.core.model.event.plugin.DeviceStateChangeEvent;
+import home.smart.core.api.DeviceEventListener;
+import home.smart.minecraft.model.event.plugin.BlockDeviceStateChangeEvent;
+import home.smart.minecraft.model.BlockDeviceIdentifier;
 import org.bukkit.block.Block;
 
 import java.util.Optional;
@@ -13,35 +14,34 @@ import java.util.function.IntConsumer;
 public class SadMinecraftEventProcessor implements MinecraftEventProcessor {
     private static final int MAX_STATE_COUNT = 16;
 
-    private final UserEventReceiver userEventReceiver;
-    private final BlockManager blockManager;
+    private final DeviceEventListener deviceEventListener;
+    private final DeviceManager deviceManager;
 
-    public SadMinecraftEventProcessor(UserEventReceiver userEventReceiver, BlockManager blockManager) {
-        this.userEventReceiver = userEventReceiver;
-        this.blockManager = blockManager;
+    public SadMinecraftEventProcessor(DeviceEventListener deviceEventListener, DeviceManager deviceManager) {
+        this.deviceEventListener = deviceEventListener;
+        this.deviceManager = deviceManager;
     }
 
     @Override
-    public void onBlockRedstone(Block block, int oldCurrent, int newCurrent, IntConsumer setCurrent) {
-        BlockDevice device = BlockDevice.fromBlock(block);
-        Optional<DeviceInformation> maybeInformation = blockManager.getInformation(device);
+    public void onBlockRedstone(Block block, int oldCurrent, int newCurrent, IntConsumer setCurrentCallback) {
+        BlockDeviceIdentifier identifier = BlockDeviceIdentifier.fromBlock(block);
+        Optional<Device> maybeDevice = deviceManager.getByPluginIdentifier(identifier);
         // Ignore blocks which are not monitored.
-        if (maybeInformation.isEmpty()) {
+        if (maybeDevice.isEmpty()) {
             return;
         }
-        DeviceInformation information = maybeInformation.orElseThrow();
+        Device device = maybeDevice.orElseThrow();
 
         // Convert the current level to the specified state count.
-        int stateCount = information.getStateType().getStateCount();
+        int stateCount = device.stateType().getStateCount();
         int oldState = convertCurrentToState(oldCurrent, stateCount);
         int newState = convertCurrentToState(newCurrent, stateCount);
 
-        // Create event cancel callback which resets current to its level before the event.
-        Runnable eventCancelCallback = () -> setCurrent.accept(oldCurrent);
-
         // Pack the data and callback in an event object and forward it to the core.
-        ChangeEvent event = new ChangeEvent(information, oldState, newState, eventCancelCallback);
-        userEventReceiver.onChange(event);
+        DeviceStateChangeEvent event = new BlockDeviceStateChangeEvent(
+                device, oldState, newState, setCurrentCallback, oldCurrent
+        );
+        deviceEventListener.onDeviceStateChange(event);
     }
 
     private static int convertCurrentToState(int current, int stateCount) {
