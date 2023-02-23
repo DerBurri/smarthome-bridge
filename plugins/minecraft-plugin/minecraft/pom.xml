@@ -4,12 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>home.smart</groupId>
+        <groupId>home.smart.plugin</groupId>
         <artifactId>minecraft-plugin</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>minecraft</artifactId>
+
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
@@ -32,7 +33,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>home.smart</groupId>
+            <groupId>home.smart.plugin</groupId>
             <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
