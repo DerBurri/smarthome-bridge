@@ -4,12 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>home.smart</groupId>
+        <groupId>home.smart.minecraft_plugin.project</groupId>
         <artifactId>minecraft-plugin</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>home.smart.minecraft_plugin.minecraft</groupId>
     <artifactId>minecraft</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>minecraft</name>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
@@ -26,22 +29,22 @@
 
     <dependencies>
         <dependency>
+            <groupId>home.smart.minecraft_plugin.controller</groupId>
+            <artifactId>controller</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>home.smart.minecraft_plugin.minecraft_adapter</groupId>
+            <artifactId>minecraft_adapter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.19.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>home.smart</groupId>
-            <artifactId>controllerrr</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>home.smart</groupId>
-            <artifactId>minecraft_adapter</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
