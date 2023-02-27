@@ -33,7 +33,13 @@
         </dependency>
         <dependency>
             <groupId>home.smart</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>controllerrr</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>home.smart</groupId>
+            <artifactId>minecraft_adapter</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

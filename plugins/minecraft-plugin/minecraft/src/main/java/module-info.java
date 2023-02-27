@@ -1,5 +1,5 @@
 module minecraft {
-    requires core;
+    requires controllerrr;
+    requires minecraft_adapter;
     requires org.bukkit;
-    requires java.logging;
 }
