@@ -1,0 +1,4 @@
+api-version: 1.19
+main: home.smart.minecraft_plugin.minecraft.api.MinecraftPlugin
+version: 0.1
+name: SmarthomePlugin

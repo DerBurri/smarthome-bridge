@@ -1,5 +1,6 @@
-package home.smart.minecraft_plugin.minecraft.control;
+package home.smart.minecraft_plugin.minecraft.api;
 
+import home.smart.minecraft_plugin.minecraft.control.Minecraft;
 import home.smart.minecraft_plugin.minecraft.start.MinecraftStarter;
 import org.bukkit.plugin.java.JavaPlugin;
 

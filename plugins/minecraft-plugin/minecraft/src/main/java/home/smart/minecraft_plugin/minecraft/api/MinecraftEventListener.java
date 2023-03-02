@@ -1,5 +1,6 @@
-package home.smart.minecraft_plugin.minecraft.control;
+package home.smart.minecraft_plugin.minecraft.api;
 
+import home.smart.minecraft_plugin.minecraft.control.MinecraftEventUnpacker;
 import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -18,7 +19,11 @@ public class MinecraftEventListener implements Closeable, Listener {
     private final MinecraftEventUnpacker minecraftEventUnpacker;
     private boolean listening;
 
-    public MinecraftEventListener(MinecraftEventUnpacker minecraftEventUnpacker, Plugin plugin, Server server) {
+    public MinecraftEventListener(
+            @SuppressWarnings("ClassEscapesDefinedScope") MinecraftEventUnpacker minecraftEventUnpacker,
+            Plugin plugin,
+            Server server
+    ) {
         assert minecraftEventUnpacker != null;
         assert plugin != null;
         assert server != null;

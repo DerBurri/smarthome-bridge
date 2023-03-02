@@ -1,5 +1,7 @@
 package home.smart.minecraft_plugin.minecraft.control;
 
+import home.smart.minecraft_plugin.minecraft.api.MinecraftEventListener;
+
 import java.io.Closeable;
 
 public class Minecraft implements Closeable {
