@@ -1,11 +1,32 @@
 package start;
 
-import pluginmanager.IPluginLoader;
+import pluginmanager.Plugin;
+import pluginmanager.PluginFactory;
+import pluginmanager.PluginLoader;
 
-public class Core implements IPluginLoader {
+import java.util.List;
+
+public class Core {
     public static void main(String[] args) {
-        System.out.println("Starting start.Core");
+
+        PluginLoader loader = new PluginLoader("plugins");
+        try {
+            List<Plugin> plugins = loader.loadPlugins();
+            for (Plugin plugin : plugins) {
+                plugin.initialize();
+                plugin.doSomething();
+            }
+
+            Plugin myPlugin = PluginFactory.createPlugin("com.example.MyPlugin");
+            if (myPlugin != null) {
+                myPlugin.initialize();
+                myPlugin.doSomething();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     }
 
 
-}
+

@@ -1,4 +1,4 @@
 package pluginmanager;
 
-public interface PluginInbound {
+public interface PluginInbound extends Plugin {
 }

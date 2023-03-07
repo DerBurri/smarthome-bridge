@@ -12,7 +12,7 @@
 
   <modules>
     <module>plugins/minecraft-plugin</module>
-    <module>core</module>
+    <module>bridge</module>
   </modules>
 
   <properties>

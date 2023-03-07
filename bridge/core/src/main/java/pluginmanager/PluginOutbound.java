@@ -1,4 +1,4 @@
 package pluginmanager;
 
-public interface PluginOutbound {
+public interface PluginOutbound extends Plugin{
 }

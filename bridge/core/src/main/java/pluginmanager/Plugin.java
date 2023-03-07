@@ -1,10 +1,9 @@
 package pluginmanager;
 
 public interface Plugin {
-    void start();
-    void stop();
+    void initialize();
 
+    void doSomething();
     String getName();
-    void setPluginOutbound(PluginOutbound pluginOutbound);
 }
 
