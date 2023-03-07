@@ -11,7 +11,7 @@ public class Core {
 
         PluginLoader loader = new PluginLoader("plugins");
         try {
-            List<Plugin> plugins = loader.loadPlugins();
+            List<Plugin> plugins = loader.loadPluginsFromJar();
             for (Plugin plugin : plugins) {
                 plugin.initialize();
                 plugin.doSomething();

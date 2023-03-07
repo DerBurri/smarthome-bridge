@@ -15,7 +15,7 @@ public class PluginLoader {
         this.pluginDirectory = pluginDirectory;
     }
 
-    public List<Plugin> loadPlugins() throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public List<Plugin> loadPluginsFromJar() throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         List<Plugin> plugins = new ArrayList<>();
         File directory = new File(pluginDirectory);
         if (!directory.exists()) {
