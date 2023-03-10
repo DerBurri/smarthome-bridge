@@ -2,7 +2,7 @@ package home.smart.minecraft_plugin.minecraft.control;
 
 import home.smart.minecraft_plugin.minecraft_adapter.api.call.MinecraftCommandProcessor;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.WorldIdentifierFactory;
-import home.smart.minecraft_plugin.minecraft_adapter.api.provide.SadMinecraftCommand;
+import home.smart.minecraft_plugin.minecraft_adapter.model.SadMinecraftCommand;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.MinecraftCommandSource;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

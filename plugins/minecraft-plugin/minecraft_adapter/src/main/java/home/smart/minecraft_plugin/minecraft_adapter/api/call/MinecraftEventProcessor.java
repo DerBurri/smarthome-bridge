@@ -2,7 +2,7 @@ package home.smart.minecraft_plugin.minecraft_adapter.api.call;
 
 import home.smart.minecraft_plugin.controller.api.DeviceStateEventListener;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifier;
-import home.smart.minecraft_plugin.minecraft_adapter.api.provide.MinecraftCommand;
+import home.smart.minecraft_plugin.minecraft_adapter.model.MinecraftCommand;
 
 import java.util.function.IntConsumer;
 

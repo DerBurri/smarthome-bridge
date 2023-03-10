@@ -18,16 +18,15 @@ public abstract class BaseDeviceDataFactory implements DeviceDataFactory {
         assert device != null;
         DeviceIdentifier identifier = device.getIdentifier();
         DeviceType type = device.getType();
-        StateType stateType = device.getStateType();
+        int stateCount = device.getStateCount();
 
         assert identifier != null;
         assert type != null;
-        assert stateType != null;
 
         return createDeviceData(
                 identifier,
                 deviceIdentifierFactory.createDeviceIdentifier(),
-                new SadDeviceMeta(type, stateType)
+                new SadDeviceMeta(type, stateCount)
         );
     }
 

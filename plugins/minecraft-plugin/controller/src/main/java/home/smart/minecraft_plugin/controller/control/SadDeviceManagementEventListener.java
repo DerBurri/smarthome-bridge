@@ -40,7 +40,6 @@ public class SadDeviceManagementEventListener implements DeviceManagementEventLi
         Device device = Objects.requireNonNull(event.getDevice());
         Objects.requireNonNull(device.getIdentifier());
         Objects.requireNonNull(device.getType());
-        Objects.requireNonNull(device.getStateType());
 
         DeviceData data = deviceDataFactory.createDeviceData(device);
         deviceDataManager.add(data);

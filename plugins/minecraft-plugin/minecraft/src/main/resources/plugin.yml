@@ -6,7 +6,7 @@ commands:
   adddevice:
     aliases:
       - addd
-    usage: "§c/adddevice <[world] x y z> <input|output> [digital|analog]"
+    usage: "§c/adddevice <[world] x y z> <input|output> [state_count(1|2|3|...)]"
   removedevice:
     aliases:
       - removed

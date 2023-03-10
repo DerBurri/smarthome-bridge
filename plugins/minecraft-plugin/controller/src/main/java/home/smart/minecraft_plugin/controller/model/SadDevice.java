@@ -22,8 +22,8 @@ public class SadDevice implements Device {
     }
 
     @Override
-    public StateType getStateType() {
-        return meta.getStateType();
+    public int getStateCount() {
+        return meta.getStateCount();
     }
 
     @Override

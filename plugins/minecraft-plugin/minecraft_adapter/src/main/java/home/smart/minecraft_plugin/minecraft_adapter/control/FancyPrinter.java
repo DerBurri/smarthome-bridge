@@ -9,5 +9,8 @@ public interface FancyPrinter {
 
     String print(DeviceType type);
 
+    @Deprecated
     String print(StateType stateType);
+
+    String printStateCount(int stateCount);
 }

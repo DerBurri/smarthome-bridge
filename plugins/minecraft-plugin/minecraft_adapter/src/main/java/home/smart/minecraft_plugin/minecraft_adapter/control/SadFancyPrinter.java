@@ -15,8 +15,24 @@ public class SadFancyPrinter implements FancyPrinter {
         return type.name().toLowerCase();
     }
 
+    @Deprecated
     @Override
     public String print(StateType type) {
         return type.name().toLowerCase() + " (" + type.getStateCount() + " states)";
+    }
+
+    @Override
+    public String printStateCount(int stateCount) {
+        String type;
+        if (stateCount <= 0) {
+            type = "invalid";
+        } else {
+            type = switch (stateCount) {
+                case 1 -> "fixed";
+                case 2 -> "digital";
+                default -> "analog";
+            };
+        }
+        return type + "(" + stateCount + ")";
     }
 }

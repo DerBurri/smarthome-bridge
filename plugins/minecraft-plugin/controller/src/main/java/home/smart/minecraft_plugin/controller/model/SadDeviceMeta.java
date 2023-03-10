@@ -1,12 +1,19 @@
 package home.smart.minecraft_plugin.controller.model;
 
+import home.smart.minecraft_plugin.controller.exception.CoreException;
+
+import java.util.Objects;
+
 public class SadDeviceMeta implements DeviceMeta {
     private final DeviceType type;
-    private final StateType stateType;
+    private final int stateCount;
 
-    public SadDeviceMeta(DeviceType type, StateType stateType) {
-        this.type = type;
-        this.stateType = stateType;
+    public SadDeviceMeta(DeviceType type, int stateCount) {
+        this.type = Objects.requireNonNull(type);
+        if (stateCount < MINIMUM_STATE_COUNT) {
+            throw new CoreException("state count must be at least 1");
+        }
+        this.stateCount = stateCount;
     }
 
     @Override
@@ -15,14 +22,14 @@ public class SadDeviceMeta implements DeviceMeta {
     }
 
     @Override
-    public StateType getStateType() {
-        return stateType;
+    public int getStateCount() {
+        return stateCount;
     }
 
     @Override
     public String toString() {
         return "SadDeviceMeta[" +
                 "type=" + type + ", " +
-                "stateType=" + stateType + ']';
+                "stateCount=" + stateCount + ']';
     }
 }

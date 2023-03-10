@@ -11,13 +11,14 @@ import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifi
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifierFactory;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.MinecraftCommandSource;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.WorldIdentifierFactory;
-import home.smart.minecraft_plugin.minecraft_adapter.api.provide.MinecraftCommand;
+import home.smart.minecraft_plugin.minecraft_adapter.model.MinecraftCommand;
 import home.smart.minecraft_plugin.minecraft_adapter.model.event.BlockAddEvent;
 import home.smart.minecraft_plugin.minecraft_adapter.model.event.BlockStateChangeEvent;
 import home.smart.minecraft_plugin.minecraft_adapter.util.CurrentConverter;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.IntConsumer;
 
 public class SadMinecraftEventProcessor implements MinecraftEventProcessor {
@@ -91,9 +92,9 @@ public class SadMinecraftEventProcessor implements MinecraftEventProcessor {
         if (oldState == newState) {
             logger.debug("Current change is irrelevant");
             /*
-             At this point, the event cannot have been triggered by us, so cancel it if it changes an output
+             At this point, the event cannot have been triggered by us, so cancel it if it changes an output.
              Initial setting on device creation is to state 0, which is also always 0 as current, so no current
-             changes can happen without state changes
+             changes can happen without state changes.
             */
             if (device.getType() == DeviceType.OUTPUT) {
                 event.cancel();
@@ -122,7 +123,7 @@ public class SadMinecraftEventProcessor implements MinecraftEventProcessor {
         );
         Optional<BlockIdentifier> maybeIdentifier = parser.extractBlockIdentifier(source);
         Optional<DeviceType> maybeType = parser.extractDeviceType();
-        Optional<StateType> maybeStateType = parser.extractStateType();
+        OptionalInt maybeStateType = parser.extractStateType();
 
         if (parser.hasNext() || maybeIdentifier.isEmpty() || maybeType.isEmpty()) {
             command.setSuccess(false);
@@ -131,20 +132,20 @@ public class SadMinecraftEventProcessor implements MinecraftEventProcessor {
 
         BlockIdentifier identifier = maybeIdentifier.orElseThrow();
         DeviceType type = maybeType.orElseThrow();
-        StateType stateType = maybeStateType.orElse(StateType.DIGITAL);
+        int stateCount = maybeStateType.orElse(DeviceMeta.MINIMUM_STATE_COUNT);
 
         boolean[] success = {true};
         deviceManagementEventListener.onDeviceAdd(new BlockAddEvent(new SadDevice(
                 identifier,
                 new SadDeviceMeta(
                         type,
-                        stateType
+                        stateCount
                 )
         ), s -> success[0] = s));
         command.setSuccess(success[0]);
         if (success[0]) {
-            source.answer("§aAdded " + fancyPrinter.print(stateType) + " " + fancyPrinter.print(type) + " device at "
-                    + fancyPrinter.print(identifier));
+            source.answer("§aAdded " + fancyPrinter.printStateCount(stateCount) + " " + fancyPrinter.print(type)
+                    + " device at " + fancyPrinter.print(identifier));
         }
     }
 
@@ -177,7 +178,7 @@ public class SadMinecraftEventProcessor implements MinecraftEventProcessor {
 
         command.setSuccess(true);
         deviceManagementEventListener.onDeviceRemove(new SadDeviceRemoveEvent(device));
-        source.answer("§aRemoved " + fancyPrinter.print(device.getStateType()) + " "
+        source.answer("§aRemoved " + fancyPrinter.printStateCount(device.getStateCount()) + " "
                 + fancyPrinter.print(device.getType()) + " device at " + fancyPrinter.print(identifier));
     }
 }

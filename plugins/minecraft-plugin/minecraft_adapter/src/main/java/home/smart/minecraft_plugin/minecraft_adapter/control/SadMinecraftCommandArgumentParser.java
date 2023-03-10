@@ -1,13 +1,10 @@
 package home.smart.minecraft_plugin.minecraft_adapter.control;
 
+import home.smart.minecraft_plugin.controller.model.DeviceMeta;
 import home.smart.minecraft_plugin.controller.model.DeviceType;
-import home.smart.minecraft_plugin.controller.model.StateType;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.*;
 
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgumentParser {
     private final Iterator<String> arguments;
@@ -105,19 +102,24 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
     }
 
     @Override
-    public Optional<StateType> extractStateType() {
+    public OptionalInt extractStateType() {
         if (!arguments.hasNext()) {
-            return Optional.empty();
+            return OptionalInt.empty();
         }
         return parseStateType(Objects.requireNonNull(arguments.next()));
     }
 
-    private Optional<StateType> parseStateType(String raw) {
+    private OptionalInt parseStateType(String raw) {
+        int stateType;
         try {
-            return Optional.of(StateType.valueOf(raw.toUpperCase()));
+            stateType = Integer.parseInt(raw);
         } catch (IllegalArgumentException e) {
-            return Optional.empty();
+            return OptionalInt.empty();
         }
+        if (stateType < DeviceMeta.MINIMUM_STATE_COUNT) {
+            return OptionalInt.empty();
+        }
+        return OptionalInt.of(stateType);
     }
 
     @Override
