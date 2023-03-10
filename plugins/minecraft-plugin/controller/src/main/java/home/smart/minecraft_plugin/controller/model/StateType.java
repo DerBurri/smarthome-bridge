@@ -13,4 +13,9 @@ public enum StateType {
     public int getStateCount() {
         return stateCount;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "(" + stateCount + ")";
+    }
 }

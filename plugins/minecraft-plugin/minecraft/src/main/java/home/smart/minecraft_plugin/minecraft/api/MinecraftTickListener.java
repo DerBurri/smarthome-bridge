@@ -1,19 +1,17 @@
-package home.smart.minecraft_plugin.minecraft.control;
+package home.smart.minecraft_plugin.minecraft.api;
 
+import home.smart.minecraft_plugin.minecraft.control.MinecraftListener;
 import home.smart.minecraft_plugin.minecraft_adapter.api.call.RedstoneTickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.Closeable;
-
-public class MinecraftTickListener implements Closeable {
+public class MinecraftTickListener extends MinecraftListener {
     private static final int START_DELAY_TICKS = 1;
     private static final int TICKS_PER_REDSTONE_TICK = 2;
 
     private final RedstoneTickListener redstoneTickListener;
     private final BukkitTask redstoneTickTask;
-    private boolean active;
 
     public MinecraftTickListener(RedstoneTickListener redstoneTickListener, Plugin plugin) {
         assert redstoneTickListener != null;
@@ -25,11 +23,11 @@ public class MinecraftTickListener implements Closeable {
                 START_DELAY_TICKS,
                 TICKS_PER_REDSTONE_TICK
         );
-        active = true;
+        enableListening();
     }
 
     private void onRedstoneTick() {
-        if (!active) {
+        if (isInactive()) {
             return;
         }
         redstoneTickListener.onRedstoneTick();
@@ -37,7 +35,7 @@ public class MinecraftTickListener implements Closeable {
 
     @Override
     public void close() {
-        active = false;
+        super.close();
         redstoneTickTask.cancel();
     }
 }

@@ -1,8 +1,4 @@
-package home.smart.minecraft_plugin.controller.data;
-
-import home.smart.minecraft_plugin.controller.model.DeviceMeta;
-import home.smart.minecraft_plugin.controller.model.DeviceType;
-import home.smart.minecraft_plugin.controller.model.StateType;
+package home.smart.minecraft_plugin.controller.model;
 
 public class SadDeviceMeta implements DeviceMeta {
     private final DeviceType type;
@@ -19,7 +15,14 @@ public class SadDeviceMeta implements DeviceMeta {
     }
 
     @Override
-    public int getStateCount() {
-        return stateType.getStateCount();
+    public StateType getStateType() {
+        return stateType;
+    }
+
+    @Override
+    public String toString() {
+        return "SadDeviceMeta[" +
+                "type=" + type + ", " +
+                "stateType=" + stateType + ']';
     }
 }

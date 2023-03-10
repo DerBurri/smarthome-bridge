@@ -1,6 +1,7 @@
 package home.smart.minecraft_plugin.minecraft.api;
 
 import home.smart.minecraft_plugin.minecraft.control.MinecraftEventUnpacker;
+import home.smart.minecraft_plugin.minecraft.control.MinecraftListener;
 import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -9,18 +10,16 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.plugin.Plugin;
 
-import java.io.Closeable;
 import java.util.Objects;
 
 /**
  * Handles listening to minecraft events and delegates calls to {@link MinecraftEventUnpacker}.
  */
-public class MinecraftEventListener implements Closeable, Listener {
+public class MinecraftEventListener extends MinecraftListener implements Listener {
     private final MinecraftEventUnpacker minecraftEventUnpacker;
-    private boolean listening;
 
     public MinecraftEventListener(
-            @SuppressWarnings("ClassEscapesDefinedScope") MinecraftEventUnpacker minecraftEventUnpacker,
+            MinecraftEventUnpacker minecraftEventUnpacker,
             Plugin plugin,
             Server server
     ) {
@@ -29,12 +28,12 @@ public class MinecraftEventListener implements Closeable, Listener {
         assert server != null;
         this.minecraftEventUnpacker = minecraftEventUnpacker;
         Objects.requireNonNull(server.getPluginManager()).registerEvents(this, plugin);
-        listening = true;
+        enableListening();
     }
 
     @EventHandler
     public void onBlockRedstone(BlockRedstoneEvent event) {
-        if (!listening) {
+        if (isInactive()) {
             return;
         }
         minecraftEventUnpacker.onBlockRedstone(Objects.requireNonNull(event));
@@ -42,7 +41,7 @@ public class MinecraftEventListener implements Closeable, Listener {
 
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
-        if (!listening) {
+        if (isInactive()) {
             return;
         }
         minecraftEventUnpacker.onChunkLoad(Objects.requireNonNull(event));
@@ -50,7 +49,7 @@ public class MinecraftEventListener implements Closeable, Listener {
 
     @Override
     public void close() {
-        listening = false;
+        super.close();
         HandlerList.unregisterAll(this);
     }
 }

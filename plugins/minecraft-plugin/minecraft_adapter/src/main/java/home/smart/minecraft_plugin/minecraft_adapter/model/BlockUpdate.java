@@ -20,7 +20,7 @@ public class BlockUpdate {
 
     private BlockUpdate(BlockIdentifier identifier, boolean hasOldCurrent, int oldCurrent, int newCurrent) {
         assert identifier != null;
-        assert hasOldCurrent == (oldCurrent == INVALID_CURRENT);
+        assert hasOldCurrent == (oldCurrent != INVALID_CURRENT);
         this.identifier = identifier;
         this.hasOldCurrent = hasOldCurrent;
         this.oldCurrent = oldCurrent;

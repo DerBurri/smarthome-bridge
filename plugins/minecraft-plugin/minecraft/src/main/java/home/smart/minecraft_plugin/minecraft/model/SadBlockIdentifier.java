@@ -4,6 +4,7 @@ import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifi
 import org.bukkit.Server;
 import org.bukkit.block.Block;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public record SadBlockIdentifier(
@@ -11,7 +12,7 @@ public record SadBlockIdentifier(
         int x,
         int y,
         int z
-) implements BlockIdentifier, BaseWorldIdentifier {
+) implements BaseBlockIdentifier {
     public static BlockIdentifier fromBlock(Block block) {
         return new SadBlockIdentifier(
                 block.getWorld().getUID(),
@@ -21,7 +22,8 @@ public record SadBlockIdentifier(
         );
     }
 
+    @Override
     public Block toBlock(Server server) {
-        return toWorld(server).getBlockAt(x, y, z);
+        return Objects.requireNonNull(toWorld(server).getBlockAt(x, y, z));
     }
 }

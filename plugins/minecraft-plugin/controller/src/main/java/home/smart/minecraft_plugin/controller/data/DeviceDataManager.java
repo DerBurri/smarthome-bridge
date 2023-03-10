@@ -1,7 +1,4 @@
-package home.smart.minecraft_plugin.controller.model;
-
-import home.smart.minecraft_plugin.controller.data.DeviceData;
-import home.smart.minecraft_plugin.controller.data.DeviceDataStore;
+package home.smart.minecraft_plugin.controller.data;
 
 public interface DeviceDataManager {
     DeviceDataStore getPluginDeviceDataStore();

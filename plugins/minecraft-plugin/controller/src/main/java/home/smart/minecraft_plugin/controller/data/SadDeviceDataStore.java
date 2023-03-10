@@ -24,9 +24,6 @@ class SadDeviceDataStore implements DeviceDataStore {
         return Optional.ofNullable(devices.get(deviceIdentifier));
     }
 
-    /*
-     * We expect each device to be stored here
-     */
     @Override
     public DeviceData getDeviceData(Device device) {
         assert device != null;

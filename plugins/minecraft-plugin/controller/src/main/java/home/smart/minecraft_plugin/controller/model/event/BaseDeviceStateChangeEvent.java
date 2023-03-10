@@ -2,20 +2,14 @@ package home.smart.minecraft_plugin.controller.model.event;
 
 import home.smart.minecraft_plugin.controller.model.Device;
 
-public abstract class AbstractDeviceStateChangeEvent implements DeviceStateChangeEvent {
-    private final Device device;
+public abstract class BaseDeviceStateChangeEvent extends BaseDeviceEvent implements DeviceStateChangeEvent {
     private final int oldState;
     private final int newState;
 
-    public AbstractDeviceStateChangeEvent(Device device, int oldState, int newState) {
-        this.device = device;
+    public BaseDeviceStateChangeEvent(Device device, int oldState, int newState) {
+        super(device);
         this.oldState = oldState;
         this.newState = newState;
-    }
-
-    @Override
-    public Device getDevice() {
-        return device;
     }
 
     /**

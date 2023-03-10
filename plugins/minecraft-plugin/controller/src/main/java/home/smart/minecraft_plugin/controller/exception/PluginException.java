@@ -1,7 +1,6 @@
 package home.smart.minecraft_plugin.controller.exception;
 
 public class PluginException extends SmarthomeException {
-
     public PluginException() {
         super();
     }

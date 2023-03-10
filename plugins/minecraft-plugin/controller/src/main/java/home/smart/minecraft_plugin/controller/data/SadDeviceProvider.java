@@ -2,7 +2,6 @@ package home.smart.minecraft_plugin.controller.data;
 
 import home.smart.minecraft_plugin.controller.api.DeviceIdentifier;
 import home.smart.minecraft_plugin.controller.model.Device;
-import home.smart.minecraft_plugin.controller.model.DeviceDataProvider;
 import home.smart.minecraft_plugin.controller.model.DeviceProvider;
 
 import java.util.Optional;

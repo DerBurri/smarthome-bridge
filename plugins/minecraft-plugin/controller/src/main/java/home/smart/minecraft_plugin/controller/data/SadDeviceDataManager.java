@@ -1,7 +1,6 @@
 package home.smart.minecraft_plugin.controller.data;
 
 import home.smart.minecraft_plugin.controller.exception.CoreException;
-import home.smart.minecraft_plugin.controller.model.DeviceDataManager;
 
 public class SadDeviceDataManager implements DeviceDataManager {
     private final SadDeviceDataStore pluginDevices = new SadDeviceDataStore(DeviceData::getPluginDevice);

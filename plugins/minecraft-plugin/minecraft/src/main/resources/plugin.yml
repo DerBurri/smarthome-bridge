@@ -2,3 +2,13 @@ api-version: 1.19
 main: home.smart.minecraft_plugin.minecraft.api.MinecraftPlugin
 version: 0.1
 name: SmarthomePlugin
+commands:
+  adddevice:
+    aliases:
+      - addd
+    usage: "§c/adddevice <[world] x y z> <input|output> [digital|analog]"
+  removedevice:
+    aliases:
+      - removed
+      - remd
+    usage: "§c/removedevice <[world] x y z>"
