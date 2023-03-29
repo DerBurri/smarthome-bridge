@@ -1,32 +1,40 @@
 package start;
 
-import pluginmanager.Plugin;
-import pluginmanager.PluginFactory;
-import pluginmanager.PluginLoader;
+import pluginmanager.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Core {
-    public static void main(String[] args) {
+public class Core implements IMediator {
 
-        PluginLoader loader = new PluginLoader("plugins");
-        try {
-            List<Plugin> plugins = loader.loadPluginsFromJar();
-            for (Plugin plugin : plugins) {
-                plugin.initialize();
-                plugin.doSomething();
-            }
+    public IPluginLoader pluginLoader;
 
-            Plugin myPlugin = PluginFactory.createPlugin("com.example.MyPlugin");
-            if (myPlugin != null) {
-                myPlugin.initialize();
-                myPlugin.doSomething();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public List<IPlugin> plugins;
+
+    public IPluginFactory pluginFactory;
+
+    public IMediator Application(List<IPlugin> plugins, IPluginFactory pluginFactory) {
+        //Trys to load all bundled plugins
+        this.plugins = plugins;
+        this.pluginFactory = pluginFactory;
+        //Trys to load all plugins from the plugins folder
+        return this;
+    }
+
+
+    @Override
+    public void sendUpdateNotification(String messageReceiver, String message) {
+        List<IPlugin> receiverList = plugins.stream().filter(plugin -> plugin.getName().equals(messageReceiver)).toList();
+
+        for (IPlugin receiver : receiverList) {
+            receiver.updateNotification(message);
         }
     }
-    }
+}
+
+
+
+
 
 
 

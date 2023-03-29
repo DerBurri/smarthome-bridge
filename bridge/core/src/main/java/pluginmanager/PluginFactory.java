@@ -1,12 +1,13 @@
 package pluginmanager;
 
 
+import java.lang.reflect.InvocationTargetException;
 
-public class PluginFactory {
-    public static Plugin createPlugin(String className) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+public class PluginFactory implements IPluginFactory {
+    public IPlugin createPlugin(String className) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
         Class<?> clazz = Class.forName(className);
-        if (Plugin.class.isAssignableFrom(clazz)) {
-            return (Plugin) clazz.newInstance();
+        if (IPlugin.class.isAssignableFrom(clazz)) {
+            return (IPlugin) clazz.getDeclaredConstructor().newInstance();
         }
         return null;
     }
