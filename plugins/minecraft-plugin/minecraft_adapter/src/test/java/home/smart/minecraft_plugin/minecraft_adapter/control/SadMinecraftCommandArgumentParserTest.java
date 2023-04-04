@@ -164,12 +164,16 @@ class SadMinecraftCommandArgumentParserTest {
         assertFalse(parser.hasNext());
     }
 
+    // Sample values
+
     private static final String DUMMY_WORLD_NAME_WHICH_EXISTS = "worldy";
     private static final String DUMMY_WORLD_NAME_WHICH_DOES_NOT_EXIST = "worldz";
     private static final UUID DUMMY_WORLD_ID_WHICH_EXISTS =
             UUID.fromString("5f740b64-8833-450e-868b-626cf55582b6");
     private static final UUID DUMMY_WORLD_ID_WHICH_DOES_NOT_EXIST =
             UUID.fromString("81b8d8cd-2fcd-4472-8e0a-44245768ad55");
+
+    // Mock object generators
 
     private static SadMinecraftCommandArgumentParser createParserWithoutArguments() {
         return new SadMinecraftCommandArgumentParser(List.of(),
@@ -193,6 +197,8 @@ class SadMinecraftCommandArgumentParserTest {
     private static DummyMinecraftCommandSource getDummyCommandSourceInWorldy() {
         return new DummyMinecraftCommandSource(DUMMY_WORLD_ID_WHICH_EXISTS);
     }
+
+    // Mock classes
 
     private static class DummyMinecraftCommandSource implements MinecraftCommandSource {
         private final WorldIdentifier worldIdentifier;
