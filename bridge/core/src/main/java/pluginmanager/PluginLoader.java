@@ -1,24 +1,15 @@
 package pluginmanager;
 
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
+
 import start.Core;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class PluginLoader implements IPluginLoader{
 
@@ -126,7 +117,7 @@ public class PluginLoader implements IPluginLoader{
 
     @Override
     public IMediator init() {
-        IMediator core = new Core().Application(pluginList,pluginFactory);
+        IMediator core = new Core(pluginList,pluginFactory);
         System.out.println("Core initialized");
         for (IPlugin plugin: pluginList
              ) {
