@@ -7,7 +7,11 @@ public class SadDeviceStateChangeEvent extends BaseDeviceStateChangeEvent {
         super(device, oldState, newState);
     }
 
+    public SadDeviceStateChangeEvent(Device device, int newState) {
+        super(device, newState);
+    }
+
     public SadDeviceStateChangeEvent(Device device, DeviceStateChangeEvent event) {
-        this(device, event.getOldState(), event.getNewState());
+        super(device, event.hasOldState(), event.getOldState(), event.getNewState());
     }
 }

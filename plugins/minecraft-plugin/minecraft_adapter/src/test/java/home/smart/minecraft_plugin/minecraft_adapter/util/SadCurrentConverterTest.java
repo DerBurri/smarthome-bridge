@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SadCurrentConverterTest {
     private static final int CURRENT_LIMIT = 16;
     private static final int MAX_CURRENT = CURRENT_LIMIT - 1;
-    CurrentConverter currentConverter = new SadCurrentConverter();
+    private final CurrentConverter currentConverter = new SadCurrentConverter();
 
     @Test
     void convertCurrentToStateDigitalOff() {
