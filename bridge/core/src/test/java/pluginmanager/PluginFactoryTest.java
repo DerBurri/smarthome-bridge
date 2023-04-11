@@ -1,6 +1,6 @@
 package pluginmanager;
 
-import coreplugins.restplugin.Plugin;
+import coreplugins.common.Plugin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
