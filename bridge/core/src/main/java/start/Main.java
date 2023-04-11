@@ -1,6 +1,5 @@
 package start;
 
-import pluginmanager.IMediator;
 import pluginmanager.PluginLoader;
 
 public class Main {
@@ -10,7 +9,7 @@ public class Main {
         PluginLoader loader = new PluginLoader(packagePrefix, pluginPath);
 
         loader.loadPlugins();
-        IMediator core = loader.init();
-        core.sendUpdateNotification("restplugin", "Hallo");
+        ICore core = loader.init();
+        core.run();
     }
 }
