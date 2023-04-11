@@ -1,6 +1,7 @@
 package pluginmanager;
 
-import java.io.IOException;
+import start.ICore;
+
 import java.util.List;
 
 public interface IPluginLoader {
@@ -12,7 +13,8 @@ public interface IPluginLoader {
     public List<IPlugin> getLoadedPlugins();
 
     void loadPlugins();
-    IMediator init();
+
+    ICore init();
 
 
 }

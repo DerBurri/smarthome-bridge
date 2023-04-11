@@ -1,7 +1,11 @@
 package pluginmanager;
 
 
+import config.Configuration;
+import config.IConfiguration;
 import start.Core;
+import start.IAppState;
+import start.ICore;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,10 +19,10 @@ public class PluginLoader implements IPluginLoader{
 
     private final String pluginDirectory;
     private final String pluginNamespace;
-
     private final IPluginFactory pluginFactory;
+    private final List<IPlugin> pluginList;
 
-    List<IPlugin> pluginList;
+    private final IConfiguration configuration;
 
 
     /**
@@ -32,6 +36,7 @@ public class PluginLoader implements IPluginLoader{
         this.pluginNamespace = namespace;
         this.pluginList = new ArrayList<IPlugin>();
         this.pluginFactory = new PluginFactory();
+        this.configuration = new Configuration();
     }
 
 
@@ -42,63 +47,58 @@ public class PluginLoader implements IPluginLoader{
 
 
         try {
+            //Get all Ressource in Classpath
             Enumeration<URL> resources = classLoader.getResources(path);
             while (resources.hasMoreElements()) {
                 URL classPath = resources.nextElement();
                 File file = new File(classPath.toURI());
                 if (file.isDirectory()) {
                     //All Plugins in checked directory
-                    String[] list = file.list();
-                    for (String pluginDirectory : list) {
-                        File pluginRoot = new File(file, pluginDirectory);
-                        if (pluginRoot.isDirectory()) {
-                            String[] pluginFileList = pluginRoot.list();
-                            String pluginName = pluginRoot.getName();
-                            loadFromBundle(pluginFileList,pluginName);
+                    File[] pluginRoot = file.listFiles();
+                    for (File pluginDirectory : pluginRoot) {
+                        if (pluginDirectory.isDirectory()) {
+                            loadFromBundle(pluginDirectory.listFiles(), pluginDirectory.getName());
                         }
                     }
                 }
             }
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             System.out.println(e.getMessage());
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.err.println("Check your plugins, Plugin class could not be found");
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.err.println("Check your plugin folder/filesystem");
         }
 
         return;
     }
 
-    private void loadFromBundle(String[] pluginFileList, String pluginName) throws ClassNotFoundException {
+    private void loadFromBundle(File[] pluginFileList, String pluginName) throws ClassNotFoundException {
+        boolean isFirstRecursiveStage = true;
+        for (File pluginFile : pluginFileList
+        ) {
+            if (pluginFile.isDirectory()) {
 
-        for (String pluginFile: pluginFileList
-             ) {
-            String className = pluginNamespace + "." + pluginName + "." + pluginFile.substring(0,pluginFile.length()-6);
-            //Class<?> clazz = Class.forName(className);
-            if (className.endsWith("Plugin"))
-            {
-                try {
-                    pluginList.add(pluginFactory.createPlugin(className));
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
+                //TODO NULL check for other implementations
+                loadFromBundle(pluginFile.listFiles(), pluginName);
+                isFirstRecursiveStage = false;
+            } else {
+
+                String className = pluginNamespace + "." + pluginFile.getParentFile().getName() + "." + pluginFile.getName().substring(0, pluginFile.getName().length() - 6);
+
+                if (className.endsWith("Plugin") && pluginFile.getParentFile().getName().equals(pluginName)) {
+                    try {
+                        pluginList.add(pluginFactory.createPlugin(className));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
     }
 
 
-
-
-    public IPlugin unloadPlugin(String pluginName)
-    {
+    public IPlugin unloadPlugin(String pluginName) {
         return null;
     }
 
@@ -116,12 +116,16 @@ public class PluginLoader implements IPluginLoader{
 
 
     @Override
-    public IMediator init() {
-        IMediator core = new Core(pluginList,pluginFactory);
+    public ICore init() {
+
+        ICore core = new Core(pluginList
+                , pluginFactory
+                , configuration
+                , IAppState.ApplicationState.STARTING);
         System.out.println("Core initialized");
-        for (IPlugin plugin: pluginList
-             ) {
-            plugin.load(core);
+        for (IPlugin plugin : pluginList
+        ) {
+            plugin.load(core.getMediator());
             System.out.println("Plugin initialized: " + plugin.getName());
         }
         return core;
