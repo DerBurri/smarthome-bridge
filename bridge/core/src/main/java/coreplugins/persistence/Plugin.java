@@ -1,4 +1,4 @@
-package coreplugins.restplugin;
+package coreplugins.persistence;
 
 import pluginmanager.IPlugin;
 import start.IMediator;
@@ -7,12 +7,13 @@ public class Plugin implements IPlugin {
 
     public IMediator core;
 
-    String pluginName;
+    public String pluginName;
+
+
     @Override
     public void load(IMediator core) {
         this.core = core;
-        this.pluginName = "restplugin";
-
+        this.pluginName = "persistence";
     }
 
     @Override
@@ -22,7 +23,7 @@ public class Plugin implements IPlugin {
 
     @Override
     public void receiveNotification(String message) {
-        System.out.println(message);
+
     }
 
     @Override

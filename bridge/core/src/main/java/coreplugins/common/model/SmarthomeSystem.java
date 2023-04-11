@@ -1,4 +1,4 @@
-package model;
+package coreplugins.common.model;
 
 public class SmarthomeSystem {
 

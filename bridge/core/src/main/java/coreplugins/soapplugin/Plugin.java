@@ -1,11 +1,11 @@
 package coreplugins.soapplugin;
 
-import pluginmanager.IMediator;
 import pluginmanager.IPlugin;
+import start.IMediator;
 
 public class Plugin implements IPlugin {
 
-    public String pluginName;
+    private String pluginName;
     @Override
     public void load(IMediator core) {
         this.pluginName = "SOAPPlugin";
@@ -17,10 +17,11 @@ public class Plugin implements IPlugin {
     }
 
     @Override
-    public void updateNotification(String message) {
+    public void receiveNotification(String message) {
 
 
     }
+
 
     @Override
     public String getName() {

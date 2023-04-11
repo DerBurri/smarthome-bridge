@@ -1,4 +1,4 @@
-package model;
+package coreplugins.common.model;
 
 import java.util.ArrayList;
 import java.util.List;
