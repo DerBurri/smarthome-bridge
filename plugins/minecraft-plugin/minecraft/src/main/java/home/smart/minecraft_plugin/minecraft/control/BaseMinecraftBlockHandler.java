@@ -1,7 +1,7 @@
 package home.smart.minecraft_plugin.minecraft.control;
 
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockHandler;
-import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifier;
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.ConcreteBlockHandler;
 
 import java.util.List;

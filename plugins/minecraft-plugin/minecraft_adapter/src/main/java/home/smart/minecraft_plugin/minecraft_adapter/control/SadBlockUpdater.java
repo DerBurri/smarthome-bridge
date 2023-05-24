@@ -2,7 +2,7 @@ package home.smart.minecraft_plugin.minecraft_adapter.control;
 
 import home.smart.minecraft_plugin.controller.exception.PluginException;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockHandler;
-import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifier;
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockUpdater;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.ConcreteBlockHandler;
 import home.smart.minecraft_plugin.minecraft_adapter.model.BlockUpdate;

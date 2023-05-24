@@ -1,6 +1,6 @@
 package home.smart.minecraft_plugin.minecraft_adapter.control;
 
-import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifier;
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 import home.smart.minecraft_plugin.minecraft_adapter.model.BlockUpdate;
 
 import java.util.HashMap;

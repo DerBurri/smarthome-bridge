@@ -4,7 +4,7 @@ import home.smart.minecraft_plugin.controller.api.DeviceStateEventListener;
 import home.smart.minecraft_plugin.controller.model.Device;
 import home.smart.minecraft_plugin.controller.model.Logger;
 import home.smart.minecraft_plugin.controller.model.event.DeviceStateChangeEvent;
-import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifier;
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockUpdater;
 import home.smart.minecraft_plugin.minecraft_adapter.model.BlockUpdate;
 import home.smart.minecraft_plugin.minecraft_adapter.util.CurrentConverter;

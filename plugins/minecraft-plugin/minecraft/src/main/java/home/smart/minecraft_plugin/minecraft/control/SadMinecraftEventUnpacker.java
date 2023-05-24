@@ -1,10 +1,10 @@
 package home.smart.minecraft_plugin.minecraft.control;
 
-import home.smart.minecraft_plugin.minecraft.model.SadBlockIdentifier;
+import home.smart.minecraft_plugin.minecraft.model.SadMinecraftBlockIdentifier;
 import home.smart.minecraft_plugin.minecraft.model.SadChunkIdentifier;
 import home.smart.minecraft_plugin.minecraft_adapter.api.call.ChunkLoadListener;
 import home.smart.minecraft_plugin.minecraft_adapter.api.call.MinecraftEventProcessor;
-import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifier;
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.ChunkIdentifier;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
@@ -35,7 +35,7 @@ public class SadMinecraftEventUnpacker implements MinecraftEventUnpacker {
         int oldCurrent = event.getOldCurrent();
         int newCurrent = event.getNewCurrent();
         IntConsumer setCurrentCallback = event::setNewCurrent;
-        BlockIdentifier identifier = SadBlockIdentifier.fromBlock(block);
+        BlockIdentifier identifier = SadMinecraftBlockIdentifier.fromBlock(block);
         minecraftEventProcessor.onBlockRedstone(identifier, oldCurrent, newCurrent, setCurrentCallback);
     }
 

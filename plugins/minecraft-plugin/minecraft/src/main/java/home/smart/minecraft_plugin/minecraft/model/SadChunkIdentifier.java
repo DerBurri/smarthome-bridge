@@ -1,6 +1,6 @@
 package home.smart.minecraft_plugin.minecraft.model;
 
-import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifier;
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.ChunkIdentifier;
 import org.bukkit.Chunk;
 

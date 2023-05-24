@@ -1,5 +1,7 @@
 package home.smart.minecraft_plugin.minecraft_adapter.api.implement;
 
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
+
 import java.util.Optional;
 
 public interface BlockHandler {

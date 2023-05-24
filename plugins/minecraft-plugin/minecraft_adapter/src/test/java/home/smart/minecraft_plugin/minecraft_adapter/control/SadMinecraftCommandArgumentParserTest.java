@@ -2,6 +2,7 @@ package home.smart.minecraft_plugin.minecraft_adapter.control;
 
 import home.smart.minecraft_plugin.controller.model.DeviceType;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.*;
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
