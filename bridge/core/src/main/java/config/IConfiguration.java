@@ -1,17 +1,12 @@
 package config;
 
-import pluginmanager.IPlugin;
-
-import java.util.List;
-
 public interface IConfiguration {
 
-    Configuration getConfig(String key);
+    ConfigKey getConfigKey(String key);
 
-    void setConfig(String key, String value);
+    void setConfigKey(String key, String value);
 
-    IConfiguration getConfigClass();
+    IConfiguration getConfiguration();
 
-
-    void init(List<IPlugin> loadedPlugins);
+    //void init(List<IPlugin> loadedPlugins);
 }
