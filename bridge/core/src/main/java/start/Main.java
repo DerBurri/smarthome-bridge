@@ -1,12 +1,12 @@
 package start;
 
-import pluginmanager.PluginLoader;
+import pluginmanager.Loader;
 
 public class Main {
     public static void main(String[] args) {
         String pluginPath = "plugins";
         String packagePrefix = "coreplugins";
-        PluginLoader loader = new PluginLoader(packagePrefix, pluginPath);
+        Loader loader = new Loader(packagePrefix, pluginPath);
 
         loader.loadPlugins();
         ICore core = loader.init();
