@@ -2,7 +2,7 @@ package config;
 
 public interface IConfiguration {
 
-    ConfigKey getConfigKey(String key);
+    ConfigRoot getConfigKey(String key);
 
     void setConfigKey(String key, String value);
 

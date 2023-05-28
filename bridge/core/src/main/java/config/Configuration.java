@@ -6,7 +6,7 @@ import start.ICore;
 public class Configuration implements IConfiguration, IPlugin {
 
 
-    private final ConfigMap configMap;
+    private final ConfigNode configNode;
 
     private ConfigMapSerializer serializer;
 
@@ -21,12 +21,13 @@ public class Configuration implements IConfiguration, IPlugin {
         } else {
             configPath = System.getenv("CONFIG_DIR");
         }
-        configMap = new ConfigMap();
+        configNode = new ConfigNode();
     }
 
     @Override
-    public ConfigKey getConfigKey(String key) {
-        return configMap.getConfigKey(key);
+    public ConfigRoot getConfigKey(String key) {
+
+        return configNode.getConfigKey(key);
     }
 
     @Override
@@ -50,10 +51,6 @@ public class Configuration implements IConfiguration, IPlugin {
 
     }
 
-    @Override
-    public void receiveNotification(String message) {
-
-    }
 
     @Override
     public String getName() {

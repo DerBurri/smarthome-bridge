@@ -19,11 +19,11 @@ public class ConfigMapSerializer {
         jsonMapper = new JsonMapper(new JsonFactory());
     }
 
-    public void writeToJsonFile(ConfigMap config, String filename) throws IOException {
+    public void writeToJsonFile(ConfigNode config, String filename) throws IOException {
         yamlMapper.writeValue(new File(filename), config);
     }
 
-    public void writeToYamlFile(ConfigMap config, String fileName) throws IOException {
+    public void writeToYamlFile(ConfigNode config, String fileName) throws IOException {
         //TODO Check
         jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
