@@ -1,15 +1,16 @@
 package coreplugins.restplugin;
 
 import pluginmanager.IPlugin;
-import start.IMediator;
+import start.ICore;
 
 public class Plugin implements IPlugin {
 
-    public IMediator core;
+    public ICore core;
 
     String pluginName;
+
     @Override
-    public void load(IMediator core) {
+    public void load(ICore core) {
         this.core = core;
         this.pluginName = "restplugin";
 
@@ -18,11 +19,6 @@ public class Plugin implements IPlugin {
     @Override
     public void unload() {
 
-    }
-
-    @Override
-    public void receiveNotification(String message) {
-        System.out.println(message);
     }
 
     @Override

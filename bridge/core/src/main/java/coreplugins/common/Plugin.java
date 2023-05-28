@@ -1,13 +1,15 @@
 package coreplugins.common;
 
+import control.IMessage;
+import control.IReceiver;
 import pluginmanager.IPlugin;
-import start.IMediator;
+import start.ICore;
 
 import java.util.List;
 
-public class Plugin implements IPlugin {
+public class Plugin implements IPlugin, IReceiver {
 
-    IMediator core;
+    ICore core;
 
     CommonServlet servlet;
 
@@ -16,7 +18,12 @@ public class Plugin implements IPlugin {
 
 
     @Override
-    public void load(IMediator core) {
+    public void receive(IMessage message) {
+
+    }
+
+    @Override
+    public void load(ICore core) {
         this.core = core;
         this.pluginName = "common";
         this.servlet = new CommonServlet();
@@ -25,11 +32,6 @@ public class Plugin implements IPlugin {
     @Override
     public void unload() {
         System.out.println("Common Plugin unloaded");
-    }
-
-    @Override
-    public void receiveNotification(String message) {
-        System.out.println("Common Plugin did something");
     }
 
     @Override
