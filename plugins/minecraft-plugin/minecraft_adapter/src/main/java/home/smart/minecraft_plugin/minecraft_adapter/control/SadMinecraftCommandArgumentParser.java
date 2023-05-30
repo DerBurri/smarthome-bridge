@@ -33,7 +33,7 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
             return Optional.empty();
         }
         String worldOrX = Objects.requireNonNull(arguments.next());
-        Optional<Integer> maybeX = parseInt(worldOrX);
+        OptionalInt maybeX = parseInt(worldOrX);
         Optional<WorldIdentifier> maybeWorldIdentifier;
         if (maybeX.isPresent()) {
             maybeWorldIdentifier = commandSource.getWorldIdentifier();
@@ -54,11 +54,11 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
         if (!arguments.hasNext()) {
             return Optional.empty();
         }
-        Optional<Integer> maybeY = parseInt(Objects.requireNonNull(arguments.next()));
+        OptionalInt maybeY = parseInt(Objects.requireNonNull(arguments.next()));
         if (!arguments.hasNext()) {
             return Optional.empty();
         }
-        Optional<Integer> maybeZ = parseInt(Objects.requireNonNull(arguments.next()));
+        OptionalInt maybeZ = parseInt(Objects.requireNonNull(arguments.next()));
         if (maybeWorldIdentifier.isEmpty() || maybeX.isEmpty() || maybeY.isEmpty() || maybeZ.isEmpty()) {
             return Optional.empty();
         }
@@ -68,14 +68,6 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
                 maybeY.orElseThrow(),
                 maybeZ.orElseThrow()
         ));
-    }
-
-    private Optional<Integer> parseInt(String raw) {
-        try {
-            return Optional.of(Integer.parseInt(raw));
-        } catch (NumberFormatException e) {
-            return Optional.empty();
-        }
     }
 
     private Optional<UUID> parseUUID(String raw) {
@@ -111,16 +103,15 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
     }
 
     private OptionalInt parseStateType(String raw) {
-        int stateType;
+        return parseInt(raw).stream().filter(stateType -> stateType >= DeviceMeta.MINIMUM_STATE_COUNT).findAny();
+    }
+
+    private OptionalInt parseInt(String raw) {
         try {
-            stateType = Integer.parseInt(raw);
-        } catch (IllegalArgumentException e) {
+            return OptionalInt.of(Integer.parseInt(raw));
+        } catch (NumberFormatException e) {
             return OptionalInt.empty();
         }
-        if (stateType < DeviceMeta.MINIMUM_STATE_COUNT) {
-            return OptionalInt.empty();
-        }
-        return OptionalInt.of(stateType);
     }
 
     @Override
