@@ -3,6 +3,8 @@ package pluginmanager;
 
 import config.Configuration;
 import config.IConfiguration;
+import control.EventPublisher;
+import control.EventReceiver;
 import start.Core;
 import start.IAppState;
 import start.ICore;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class PluginLoader implements IPluginLoader{
+public class Loader implements IPluginLoader {
 
     private final String pluginDirectory;
     private final String pluginNamespace;
@@ -26,12 +28,11 @@ public class PluginLoader implements IPluginLoader{
 
 
     /**
-     *
-     * @param namespace This parameter is either the packageNamespace to Load Core Plugins from
+     * @param namespace       This parameter is either the packageNamespace to Load Core Plugins from
      * @param pluginDirectory This parameter is the path to the directory where the plugins are located
      */
 
-    public PluginLoader(String namespace,String pluginDirectory) {
+    public Loader(String namespace, String pluginDirectory) {
         this.pluginDirectory = pluginDirectory;
         this.pluginNamespace = namespace;
         this.pluginList = new ArrayList<IPlugin>();
@@ -115,17 +116,20 @@ public class PluginLoader implements IPluginLoader{
     }
 
 
+
     @Override
     public ICore init() {
 
         ICore core = new Core(pluginList
                 , pluginFactory
                 , configuration
-                , IAppState.ApplicationState.STARTING);
+                , IAppState.ApplicationState.STARTING
+                , new EventPublisher()
+                , new EventReceiver());
         System.out.println("Core initialized");
         for (IPlugin plugin : pluginList
         ) {
-            plugin.load(core.getMediator());
+            plugin.load(core.getCore());
             System.out.println("Plugin initialized: " + plugin.getName());
         }
         return core;
