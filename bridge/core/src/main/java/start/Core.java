@@ -95,7 +95,7 @@ public class Core implements ICore, IAppState, ICoreFeatureProvider {
     }
 
     @Override
-    public List<ICoreFeatureProvider> getCoreFeatures() {
+    public List<ICoreFeature> getCoreFeatures() {
         return null;
     }
 }

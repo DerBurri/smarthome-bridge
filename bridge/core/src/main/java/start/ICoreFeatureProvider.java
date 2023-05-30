@@ -8,5 +8,5 @@ public interface ICoreFeatureProvider {
 
     void unregisterFeature();
 
-    List<ICoreFeatureProvider> getCoreFeatures();
+    List<ICoreFeature> getCoreFeatures();
 }
