@@ -16,7 +16,7 @@ public class Core implements ICore, IAppState, ICoreFeatureProvider {
 
     public final IConfiguration configuration;
     public final List<IPlugin> loadedPlugins;
-    public final LinkedList<ICoreFeatureProvider> coreFeatures;
+    public final LinkedList<ICoreFeature> coreFeatures;
     public final IPublisher publisher;
     public final IReceiver receiver;
 
@@ -39,7 +39,7 @@ public class Core implements ICore, IAppState, ICoreFeatureProvider {
         this.publisher = publisher;
         this.receiver = receiver;
 
-        coreFeatures = new LinkedList<ICoreFeatureProvider>();
+        coreFeatures = new LinkedList<ICoreFeature>();
 
         //configuration.init(loadedPlugins);
     }
@@ -85,18 +85,19 @@ public class Core implements ICore, IAppState, ICoreFeatureProvider {
 
 
     @Override
-    public void registerFeature() {
+    public void registerFeature(ICoreFeature feature) {
+        coreFeatures.add(feature);
 
     }
 
     @Override
-    public void unregisterFeature() {
-
+    public void unregisterFeature(ICoreFeature feature) {
+        coreFeatures.remove(feature);
     }
 
     @Override
     public List<ICoreFeature> getCoreFeatures() {
-        return null;
+        return coreFeatures;
     }
 }
 

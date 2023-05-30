@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class CoreTest {
 
@@ -32,11 +33,13 @@ class CoreTest {
     @Mock
     private IReceiver receiver;
 
+    @Mock
+    private ICoreFeature feature;
+
     private Core core;
 
     @BeforeEach
     public void setUp() {
-
         MockitoAnnotations.openMocks(this);
         List<IPlugin> plugins = new ArrayList<>();
         core = new Core(plugins, pluginFactory, configuration,
@@ -93,17 +96,15 @@ class CoreTest {
     }
 
     @Test
-    void registerPlugin_CheckPluginList() {
-        core.registerFeature();
-
+    void registerFeature() {
+        core.registerFeature(feature);
+        assert (core.getCoreFeatures().contains(feature));
     }
 
     @Test
-    void unregisterPlugin() {
+    void unregisterFeature() {
+        core.registerFeature(feature);
+        core.unregisterFeature(feature);
+        assertFalse(core.getCoreFeatures().contains(feature));
     }
-
-    @Test
-    void notifyPlugins() {
-    }
-
 }

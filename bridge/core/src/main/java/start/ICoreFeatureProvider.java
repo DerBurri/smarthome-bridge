@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface ICoreFeatureProvider {
 
-    void registerFeature();
+    void registerFeature(ICoreFeature feature);
 
-    void unregisterFeature();
+    void unregisterFeature(ICoreFeature feature);
 
     List<ICoreFeature> getCoreFeatures();
 }
