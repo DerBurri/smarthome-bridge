@@ -7,8 +7,7 @@ import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 
 import java.util.*;
 
-public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgumentParser {
-    private final Iterator<String> arguments;
+public class SadMinecraftCommandArgumentParser extends BaseMinecraftCommandArgumentParser {
     private final WorldIdentifierFactory worldIdentifierFactory;
     private final BlockIdentifierFactory blockIdentifierFactory;
 
@@ -17,10 +16,9 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
             WorldIdentifierFactory worldIdentifierFactory,
             BlockIdentifierFactory blockIdentifierFactory
     ) {
-        assert arguments != null;
+        super(arguments);
         assert worldIdentifierFactory != null;
         assert blockIdentifierFactory != null;
-        this.arguments = arguments.iterator();
         this.worldIdentifierFactory = worldIdentifierFactory;
         this.blockIdentifierFactory = blockIdentifierFactory;
     }
@@ -29,10 +27,10 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
     public Optional<BlockIdentifier> extractBlockIdentifier(MinecraftCommandSource commandSource) {
         assert commandSource != null;
 
-        if (!arguments.hasNext()) {
+        if (!hasNextArgument()) {
             return Optional.empty();
         }
-        String worldOrX = Objects.requireNonNull(arguments.next());
+        String worldOrX = getNextArgument();
         OptionalInt maybeX = parseInt(worldOrX);
         Optional<WorldIdentifier> maybeWorldIdentifier;
         if (maybeX.isPresent()) {
@@ -44,19 +42,19 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
             } else {
                 maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(worldOrX);
             }
-            if (!arguments.hasNext()) {
+            if (!hasNextArgument()) {
                 return Optional.empty();
             }
-            maybeX = parseInt(Objects.requireNonNull(arguments.next()));
+            maybeX = parseInt(getNextArgument());
         }
-        if (!arguments.hasNext()) {
+        if (!hasNextArgument()) {
             return Optional.empty();
         }
-        OptionalInt maybeY = parseInt(Objects.requireNonNull(arguments.next()));
-        if (!arguments.hasNext()) {
+        OptionalInt maybeY = parseInt(getNextArgument());
+        if (!hasNextArgument()) {
             return Optional.empty();
         }
-        OptionalInt maybeZ = parseInt(Objects.requireNonNull(arguments.next()));
+        OptionalInt maybeZ = parseInt(getNextArgument());
         if (maybeWorldIdentifier.isEmpty() || maybeX.isEmpty() || maybeY.isEmpty() || maybeZ.isEmpty()) {
             return Optional.empty();
         }
@@ -78,10 +76,10 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
 
     @Override
     public Optional<DeviceType> extractDeviceType() {
-        if (!arguments.hasNext()) {
+        if (!hasNextArgument()) {
             return Optional.empty();
         }
-        return parseDeviceType(Objects.requireNonNull(arguments.next()));
+        return parseDeviceType(getNextArgument());
     }
 
     private Optional<DeviceType> parseDeviceType(String raw) {
@@ -94,10 +92,10 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
 
     @Override
     public OptionalInt extractStateType() {
-        if (!arguments.hasNext()) {
+        if (!hasNextArgument()) {
             return OptionalInt.empty();
         }
-        return parseStateType(Objects.requireNonNull(arguments.next()));
+        return parseStateType(getNextArgument());
     }
 
     private OptionalInt parseStateType(String raw) {
@@ -114,6 +112,6 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
 
     @Override
     public boolean hasNext() {
-        return arguments.hasNext();
+        return hasNextArgument();
     }
 }
