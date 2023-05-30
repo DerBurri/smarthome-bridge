@@ -9,7 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>restprovider</artifactId>
+    <artifactId>minecraft_core_adapter</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>home.smart</groupId>

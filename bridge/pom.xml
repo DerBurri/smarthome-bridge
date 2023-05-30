@@ -12,6 +12,7 @@
         <module>restprovider</module>
         <module>core</module>
         <module>coverage_report</module>
+        <module>minecraft_core_adapter</module>
     </modules>
 
     <parent>
