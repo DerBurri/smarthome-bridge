@@ -1,18 +1,18 @@
 package pluginmanager;
 
 
-import start.IMediator;
+import start.ICore;
 
 public interface IPlugin {
 
-    void load(IMediator core);
+    void load(ICore core);
 
     void unload();
-
-    void receiveNotification(String message);
 
     String getName();
 
     String getDependencies();
+
+
 }
 
