@@ -28,22 +28,69 @@ public class SadMinecraftCommandArgumentParser extends BaseMinecraftCommandArgum
         assert commandSource != null;
 
         return succeedOrDefault(() -> {
-            String worldOrX = requireAndGetNextArgument();
-            OptionalInt maybeX = parseInt(worldOrX);
-            Optional<WorldIdentifier> maybeWorldIdentifier;
+            BlockIdentifierParser parser = new BlockIdentifierParser();
+            parser.getAndParseWorldIdentifierAndX(commandSource);
+            parser.getAndParseY();
+            parser.getAndParseZ();
+            return parser.build();
+        }, Optional::empty);
+    }
+
+    private class BlockIdentifierParser {
+        private Optional<WorldIdentifier> maybeWorldIdentifier = Optional.empty();
+        private OptionalInt maybeX = OptionalInt.empty();
+        private OptionalInt maybeY = OptionalInt.empty();
+        private OptionalInt maybeZ = OptionalInt.empty();
+
+        void getAndParseWorldIdentifierAndX(MinecraftCommandSource commandSource) {
+            String worldOrXRaw = requireAndGetNextArgument();
+            parseX(worldOrXRaw);
             if (maybeX.isPresent()) {
-                maybeWorldIdentifier = commandSource.getWorldIdentifier();
+                parseWorldIdentifierImplicitlyByLocating(commandSource);
             } else {
-                Optional<UUID> maybeWorldId = parseUUID(worldOrX);
-                if (maybeWorldId.isPresent()) {
-                    maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(maybeWorldId.orElseThrow());
-                } else {
-                    maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(worldOrX);
-                }
-                maybeX = parseInt(requireAndGetNextArgument());
+                parseWorldIdentifierExplicitly(worldOrXRaw);
+                getAndParseX();
             }
-            OptionalInt maybeY = parseInt(requireAndGetNextArgument());
-            OptionalInt maybeZ = parseInt(requireAndGetNextArgument());
+        }
+
+        private void parseWorldIdentifierImplicitlyByLocating(MinecraftCommandSource commandSource) {
+            maybeWorldIdentifier = commandSource.getWorldIdentifier();
+        }
+
+        private void parseWorldIdentifierExplicitly(String raw) {
+            Optional<UUID> maybeWorldId = parseUUID(raw);
+            if (maybeWorldId.isPresent()) {
+                maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(maybeWorldId.orElseThrow());
+            } else {
+                maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(raw);
+            }
+        }
+
+        private static Optional<UUID> parseUUID(String raw) {
+            try {
+                return Optional.of(UUID.fromString(raw));
+            } catch (IllegalArgumentException ignored) {
+                return Optional.empty();
+            }
+        }
+
+        void parseX(String raw) {
+            maybeX = parseInt(raw);
+        }
+
+        void getAndParseX() {
+            maybeX = requireAndGetNextArgumentAsInt();
+        }
+
+        void getAndParseY() {
+            maybeY = requireAndGetNextArgumentAsInt();
+        }
+
+        void getAndParseZ() {
+            maybeZ = requireAndGetNextArgumentAsInt();
+        }
+
+        Optional<BlockIdentifier> build() {
             if (maybeWorldIdentifier.isEmpty() || maybeX.isEmpty() || maybeY.isEmpty() || maybeZ.isEmpty()) {
                 throw returnDefault();
             }
@@ -53,23 +100,14 @@ public class SadMinecraftCommandArgumentParser extends BaseMinecraftCommandArgum
                     maybeY.orElseThrow(),
                     maybeZ.orElseThrow()
             ));
-        }, Optional::empty);
-    }
-
-    private Optional<UUID> parseUUID(String raw) {
-        try {
-            return Optional.of(UUID.fromString(raw));
-        } catch (IllegalArgumentException ignored) {
-            return Optional.empty();
         }
     }
 
     @Override
     public Optional<DeviceType> extractDeviceType() {
         return succeedOrDefault(() -> {
-            String raw = requireAndGetNextArgument();
             try {
-                return Optional.of(DeviceType.valueOf(raw.toUpperCase()));
+                return Optional.of(DeviceType.valueOf(requireAndGetNextArgument().toUpperCase()));
             } catch (IllegalArgumentException ignored) {
                 throw returnDefault();
             }
@@ -78,18 +116,9 @@ public class SadMinecraftCommandArgumentParser extends BaseMinecraftCommandArgum
 
     @Override
     public OptionalInt extractStateType() {
-        return succeedOrDefault(() -> {
-            OptionalInt raw = parseInt(requireAndGetNextArgument());
-            return raw.stream().filter(stateType -> stateType >= DeviceMeta.MINIMUM_STATE_COUNT).findAny();
-        }, OptionalInt::empty);
-    }
-
-    private OptionalInt parseInt(String raw) {
-        try {
-            return OptionalInt.of(Integer.parseInt(raw));
-        } catch (NumberFormatException ignored) {
-            return OptionalInt.empty();
-        }
+        return succeedOrDefault(() ->
+                requireAndGetNextArgumentAsInt().stream().filter(stateType -> stateType >= DeviceMeta.MINIMUM_STATE_COUNT).findAny()
+        , OptionalInt::empty);
     }
 
     @Override

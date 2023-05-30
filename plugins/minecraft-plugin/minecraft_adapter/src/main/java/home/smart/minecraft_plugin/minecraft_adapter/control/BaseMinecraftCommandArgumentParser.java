@@ -2,6 +2,7 @@ package home.smart.minecraft_plugin.minecraft_adapter.control;
 
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.OptionalInt;
 import java.util.function.Supplier;
 
 public abstract class BaseMinecraftCommandArgumentParser implements MinecraftCommandArgumentParser {
@@ -10,6 +11,18 @@ public abstract class BaseMinecraftCommandArgumentParser implements MinecraftCom
     public BaseMinecraftCommandArgumentParser(Iterable<String> arguments) {
         assert arguments != null;
         this.arguments = arguments.iterator();
+    }
+
+    protected OptionalInt requireAndGetNextArgumentAsInt() {
+        return parseInt(requireAndGetNextArgument());
+    }
+
+    protected OptionalInt parseInt(String raw) {
+        try {
+            return OptionalInt.of(Integer.parseInt(raw));
+        } catch (NumberFormatException ignored) {
+            return OptionalInt.empty();
+        }
     }
 
     protected String requireAndGetNextArgument() {
