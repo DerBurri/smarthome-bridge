@@ -9,7 +9,7 @@ public class PluginFactory implements IPluginFactory {
         if (IPlugin.class.isAssignableFrom(clazz)) {
             return (IPlugin) clazz.getDeclaredConstructor().newInstance();
         }
-        return null;
+        throw new InstantiationException("IPlugin Interface in Plugin not found");
     }
 }
 
