@@ -1,4 +1,4 @@
-package config;
+package coreplugins.config;
 
 import java.util.Map;
 

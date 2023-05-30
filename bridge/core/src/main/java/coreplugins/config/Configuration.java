@@ -1,4 +1,4 @@
-package config;
+package coreplugins.config;
 
 import pluginmanager.IPlugin;
 import start.ICore;
