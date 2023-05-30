@@ -1,4 +1,4 @@
-package config;
+package coreplugins.config;
 
 public interface IConfiguration {
 
