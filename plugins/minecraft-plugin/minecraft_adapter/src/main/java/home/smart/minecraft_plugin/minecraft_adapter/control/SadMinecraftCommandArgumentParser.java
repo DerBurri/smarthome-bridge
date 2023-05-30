@@ -44,8 +44,6 @@ public class SadMinecraftCommandArgumentParser implements MinecraftCommandArgume
             } else {
                 maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(worldOrX);
             }
-        }
-        if (maybeX.isEmpty()) {
             if (!arguments.hasNext()) {
                 return Optional.empty();
             }
