@@ -1,7 +1,7 @@
 package coreplugins.common;
 
-import control.IMessage;
-import control.IReceiver;
+import coreplugins.control.IReceiver;
+import coreplugins.control.model.IMessage;
 import pluginmanager.IPlugin;
 import start.ICore;
 
