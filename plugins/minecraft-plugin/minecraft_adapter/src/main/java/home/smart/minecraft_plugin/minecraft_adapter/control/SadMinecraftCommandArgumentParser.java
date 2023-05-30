@@ -27,85 +27,67 @@ public class SadMinecraftCommandArgumentParser extends BaseMinecraftCommandArgum
     public Optional<BlockIdentifier> extractBlockIdentifier(MinecraftCommandSource commandSource) {
         assert commandSource != null;
 
-        if (!hasNextArgument()) {
-            return Optional.empty();
-        }
-        String worldOrX = getNextArgument();
-        OptionalInt maybeX = parseInt(worldOrX);
-        Optional<WorldIdentifier> maybeWorldIdentifier;
-        if (maybeX.isPresent()) {
-            maybeWorldIdentifier = commandSource.getWorldIdentifier();
-        } else {
-            Optional<UUID> maybeWorldId = parseUUID(worldOrX);
-            if (maybeWorldId.isPresent()) {
-                maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(maybeWorldId.orElseThrow());
+        return succeedOrDefault(() -> {
+            String worldOrX = requireAndGetNextArgument();
+            OptionalInt maybeX = parseInt(worldOrX);
+            Optional<WorldIdentifier> maybeWorldIdentifier;
+            if (maybeX.isPresent()) {
+                maybeWorldIdentifier = commandSource.getWorldIdentifier();
             } else {
-                maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(worldOrX);
+                Optional<UUID> maybeWorldId = parseUUID(worldOrX);
+                if (maybeWorldId.isPresent()) {
+                    maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(maybeWorldId.orElseThrow());
+                } else {
+                    maybeWorldIdentifier = worldIdentifierFactory.createIfPresent(worldOrX);
+                }
+                maybeX = parseInt(requireAndGetNextArgument());
             }
-            if (!hasNextArgument()) {
-                return Optional.empty();
+            OptionalInt maybeY = parseInt(requireAndGetNextArgument());
+            OptionalInt maybeZ = parseInt(requireAndGetNextArgument());
+            if (maybeWorldIdentifier.isEmpty() || maybeX.isEmpty() || maybeY.isEmpty() || maybeZ.isEmpty()) {
+                throw returnDefault();
             }
-            maybeX = parseInt(getNextArgument());
-        }
-        if (!hasNextArgument()) {
-            return Optional.empty();
-        }
-        OptionalInt maybeY = parseInt(getNextArgument());
-        if (!hasNextArgument()) {
-            return Optional.empty();
-        }
-        OptionalInt maybeZ = parseInt(getNextArgument());
-        if (maybeWorldIdentifier.isEmpty() || maybeX.isEmpty() || maybeY.isEmpty() || maybeZ.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(blockIdentifierFactory.create(
-                maybeWorldIdentifier.orElseThrow().worldId(),
-                maybeX.orElseThrow(),
-                maybeY.orElseThrow(),
-                maybeZ.orElseThrow()
-        ));
+            return Optional.of(blockIdentifierFactory.create(
+                    maybeWorldIdentifier.orElseThrow().worldId(),
+                    maybeX.orElseThrow(),
+                    maybeY.orElseThrow(),
+                    maybeZ.orElseThrow()
+            ));
+        }, Optional::empty);
     }
 
     private Optional<UUID> parseUUID(String raw) {
         try {
             return Optional.of(UUID.fromString(raw));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ignored) {
             return Optional.empty();
         }
     }
 
     @Override
     public Optional<DeviceType> extractDeviceType() {
-        if (!hasNextArgument()) {
-            return Optional.empty();
-        }
-        return parseDeviceType(getNextArgument());
-    }
-
-    private Optional<DeviceType> parseDeviceType(String raw) {
-        try {
-            return Optional.of(DeviceType.valueOf(raw.toUpperCase()));
-        } catch (IllegalArgumentException e) {
-            return Optional.empty();
-        }
+        return succeedOrDefault(() -> {
+            String raw = requireAndGetNextArgument();
+            try {
+                return Optional.of(DeviceType.valueOf(raw.toUpperCase()));
+            } catch (IllegalArgumentException ignored) {
+                throw returnDefault();
+            }
+        }, Optional::empty);
     }
 
     @Override
     public OptionalInt extractStateType() {
-        if (!hasNextArgument()) {
-            return OptionalInt.empty();
-        }
-        return parseStateType(getNextArgument());
-    }
-
-    private OptionalInt parseStateType(String raw) {
-        return parseInt(raw).stream().filter(stateType -> stateType >= DeviceMeta.MINIMUM_STATE_COUNT).findAny();
+        return succeedOrDefault(() -> {
+            OptionalInt raw = parseInt(requireAndGetNextArgument());
+            return raw.stream().filter(stateType -> stateType >= DeviceMeta.MINIMUM_STATE_COUNT).findAny();
+        }, OptionalInt::empty);
     }
 
     private OptionalInt parseInt(String raw) {
         try {
             return OptionalInt.of(Integer.parseInt(raw));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
             return OptionalInt.empty();
         }
     }

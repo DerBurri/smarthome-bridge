@@ -2,6 +2,7 @@ package home.smart.minecraft_plugin.minecraft_adapter.control;
 
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public abstract class BaseMinecraftCommandArgumentParser implements MinecraftCommandArgumentParser {
     private final Iterator<String> arguments;
@@ -11,11 +12,36 @@ public abstract class BaseMinecraftCommandArgumentParser implements MinecraftCom
         this.arguments = arguments.iterator();
     }
 
-    protected String getNextArgument() {
-        return Objects.requireNonNull(arguments.next());
+    protected String requireAndGetNextArgument() {
+        requireNextArgument();
+        return getNextArgument();
+    }
+
+    private void requireNextArgument() {
+        if (!hasNextArgument()) {
+            throw returnDefault();
+        }
     }
 
     protected boolean hasNextArgument() {
         return arguments.hasNext();
     }
+
+    private String getNextArgument() {
+        return Objects.requireNonNull(arguments.next());
+    }
+
+    protected <T> T succeedOrDefault(Supplier<T> task, Supplier<T> defaultSupplier) {
+        try {
+            return task.get();
+        } catch (ExtractException ignored) {
+            return defaultSupplier.get();
+        }
+    }
+
+    protected ExtractException returnDefault() {
+        return new ExtractException();
+    }
+
+    private static class ExtractException extends RuntimeException {}
 }
