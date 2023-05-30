@@ -1,27 +1,30 @@
 package coreplugins.control;
 
-import pluginmanager.IPlugin;
+import start.ICoreFeature;
 
-public class EventPublisher implements IPublisher {
+import java.util.List;
 
+public class EventPublisher implements IPublisher, ICoreFeature {
+
+    List<IReceiver> recipients;
 
     @Override
-    public void registerPlugin(IPlugin plugin) {
+    public void registerRecipient(IReceiver recipient) {
 
     }
 
     @Override
-    public void unregisterPlugin(IPlugin plugin) {
+    public void unregisterRecipient(IReceiver recipient) {
 
     }
 
     @Override
-    public void notifyPlugin(IPlugin recipient, String message) {
-
+    public String getName() {
+        return null;
     }
 
     @Override
-    public void notifyPlugins(String message) {
+    public void execute() {
 
     }
 }
