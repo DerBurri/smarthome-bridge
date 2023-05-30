@@ -1,8 +1,6 @@
 package start;
 
 import coreplugins.config.IConfiguration;
-import coreplugins.control.IPublisher;
-import coreplugins.control.IReceiver;
 import coreplugins.control.model.Message;
 import pluginmanager.IPlugin;
 import pluginmanager.IPluginFactory;
@@ -14,31 +12,24 @@ import java.util.List;
 public class Core implements ICore, IAppState, ICoreFeatureProvider {
 
 
-    public final IConfiguration configuration;
     public final List<IPlugin> loadedPlugins;
     public final LinkedList<ICoreFeature> coreFeatures;
-    public final IPublisher publisher;
-    public final IReceiver receiver;
-
     public final IPluginFactory pluginFactory;
+
+    public final IConfiguration configuration;
     public ApplicationState appState;
 
 
     public Core(List<IPlugin> plugins,
                 IPluginFactory pluginFactory,
                 IConfiguration configuration,
-                IAppState.ApplicationState initialState,
-                IPublisher publisher,
-                IReceiver receiver) {
+                IAppState.ApplicationState initialState) {
 
         //Trys to load all bundled plugins
         this.loadedPlugins = plugins;
         this.pluginFactory = pluginFactory;
-        this.configuration = configuration;
         this.appState = initialState;
-        this.publisher = publisher;
-        this.receiver = receiver;
-
+        this.configuration = configuration;
         coreFeatures = new LinkedList<ICoreFeature>();
 
         //configuration.init(loadedPlugins);

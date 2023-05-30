@@ -1,10 +1,8 @@
 package pluginmanager;
 
 
-import config.Configuration;
-import config.IConfiguration;
-import control.EventPublisher;
-import control.EventReceiver;
+import coreplugins.config.Configuration;
+import coreplugins.config.IConfiguration;
 import start.Core;
 import start.IAppState;
 import start.ICore;
@@ -98,34 +96,13 @@ public class Loader implements IPluginLoader {
         }
     }
 
-
-    public IPlugin unloadPlugin(String pluginName) {
-        return null;
-    }
-
-
-    @Override
-    public IPlugin loadPlugin(String pluginName) {
-        return null;
-    }
-
-    @Override
-    public List<IPlugin> getLoadedPlugins()
-    {
-        return pluginList;
-    }
-
-
-
     @Override
     public ICore init() {
 
         ICore core = new Core(pluginList
                 , pluginFactory
                 , configuration
-                , IAppState.ApplicationState.STARTING
-                , new EventPublisher()
-                , new EventReceiver());
+                , IAppState.ApplicationState.STARTING);
         System.out.println("Core initialized");
         for (IPlugin plugin : pluginList
         ) {
