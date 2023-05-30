@@ -1,9 +1,9 @@
 package start;
 
-import config.IConfiguration;
-import control.IPublisher;
-import control.IReceiver;
-import control.Message;
+import coreplugins.config.IConfiguration;
+import coreplugins.control.IPublisher;
+import coreplugins.control.IReceiver;
+import coreplugins.control.model.Message;
 import pluginmanager.IPlugin;
 import pluginmanager.IPluginFactory;
 
