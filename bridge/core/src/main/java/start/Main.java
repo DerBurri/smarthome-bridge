@@ -1,16 +1,15 @@
 package start;
 
-import pluginmanager.IMediator;
-import pluginmanager.PluginLoader;
+import pluginmanager.Loader;
 
 public class Main {
     public static void main(String[] args) {
         String pluginPath = "plugins";
         String packagePrefix = "coreplugins";
-        PluginLoader loader = new PluginLoader(packagePrefix, pluginPath);
+        Loader loader = new Loader(packagePrefix, pluginPath);
 
         loader.loadPlugins();
-        IMediator core = loader.init();
-        core.sendUpdateNotification("restplugin", "Hallo");
+        ICore core = loader.init();
+        core.run();
     }
 }

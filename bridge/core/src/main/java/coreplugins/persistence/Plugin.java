@@ -1,14 +1,19 @@
-package coreplugins.soapplugin;
+package coreplugins.persistence;
 
-import pluginmanager.IMediator;
 import pluginmanager.IPlugin;
+import start.IMediator;
 
 public class Plugin implements IPlugin {
 
+    public IMediator core;
+
     public String pluginName;
+
+
     @Override
     public void load(IMediator core) {
-        this.pluginName = "SOAPPlugin";
+        this.core = core;
+        this.pluginName = "persistence";
     }
 
     @Override
@@ -17,8 +22,7 @@ public class Plugin implements IPlugin {
     }
 
     @Override
-    public void updateNotification(String message) {
-
+    public void receiveNotification(String message) {
 
     }
 
