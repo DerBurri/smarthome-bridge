@@ -7,7 +7,7 @@ import home.smart.minecraft_plugin.controller.model.*;
 import home.smart.minecraft_plugin.controller.model.event.PluginDeviceStateChangeEvent;
 import home.smart.minecraft_plugin.controller.model.event.SadDeviceRemoveEvent;
 import home.smart.minecraft_plugin.minecraft_adapter.api.call.MinecraftEventProcessor;
-import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifier;
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifierFactory;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.MinecraftCommandSource;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.WorldIdentifierFactory;

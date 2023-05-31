@@ -3,7 +3,7 @@ package home.smart.minecraft_plugin.minecraft.control;
 import home.smart.minecraft_plugin.controller.model.Logger;
 import home.smart.minecraft_plugin.minecraft.control.applier.BlockApplier;
 import home.smart.minecraft_plugin.minecraft.model.BaseBlockIdentifier;
-import home.smart.minecraft_plugin.minecraft_adapter.api.implement.BlockIdentifier;
+import home.smart.minecraft_plugin.minecraft_adapter.model.BlockIdentifier;
 import home.smart.minecraft_plugin.minecraft_adapter.api.implement.ConcreteBlockHandler;
 import home.smart.minecraft_plugin.minecraft_adapter.model.BlockUpdate;
 import org.bukkit.Server;
